@@ -76,8 +76,26 @@ class Task < ActiveRecord::Base
     end
     
     r.milestone.update_counts if r.milestone
+    
+  }
+  
+  before_update { |r_|
+    logger.info "\n\n>>>Teste hook before update<<<\n\n"
+    #r_.started_at = Time.now.utc.midnight
+    #r_.update
+    r_.generate_started_at_date r_
   }
 
+  before_save do |_r|
+     logger.info "\n\n>>>Teste hook before save<<<\n\n"
+    _r.generate_started_at_date _r
+  end
+  
+  def generate_started_at_date(task)
+    logger.info "\n\n>>|generate_started_at_date[task_id=#{self.id}, due_date=#{self.due_date}]|<<\n\n"
+    
+    self.started_at = Time.now.utc.midnight
+  end
   # w: 1, next day-of-week: Every _Sunday_
   # m: 1, next day-of-month: On the _10th_ day of every month
   # n: 2, nth day-of-week: On the _1st_ _Sunday_ of each month

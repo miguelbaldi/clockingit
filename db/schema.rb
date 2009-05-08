@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081123091936) do
+ActiveRecord::Schema.define(:version => 20090507223347) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id",       :default => 0,  :null => false
@@ -145,14 +145,14 @@ ActiveRecord::Schema.define(:version => 20081123091936) do
   add_index "ical_entries", ["work_log_id"], :name => "index_ical_entries_on_work_log_id"
 
   create_table "locales", :force => true do |t|
-    t.string   "locale"
-    t.string   "key"
+    t.string   "locale",     :limit => 155
+    t.string   "key",        :limit => 155
     t.text     "singular"
     t.text     "plural"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "same",       :default => false
+    t.boolean  "same",                      :default => false
   end
 
   add_index "locales", ["locale", "key"], :name => "index_locales_on_locale_and_key", :unique => true
@@ -467,8 +467,10 @@ ActiveRecord::Schema.define(:version => 20081123091936) do
     t.integer  "scheduled_duration"
     t.boolean  "scheduled",                         :default => false
     t.integer  "worked_minutes",                    :default => 0
+    t.datetime "started_at"
   end
 
+  add_index "tasks", ["project_id", "name"], :name => "idx_task_001", :unique => true
   add_index "tasks", ["project_id", "milestone_id"], :name => "tasks_project_id_index"
   add_index "tasks", ["company_id"], :name => "tasks_company_id_index"
   add_index "tasks", ["project_id", "completed_at"], :name => "tasks_project_completed_index"
@@ -569,10 +571,11 @@ ActiveRecord::Schema.define(:version => 20081123091936) do
     t.string  "filter_tags",         :default => ""
     t.integer "filter_status",       :default => 0
     t.integer "filter_type_id",      :default => 0
-    t.integer "hide_dependencies"
+    t.integer "hide_deferred"
     t.integer "sort",                :default => 0
     t.integer "filter_severity",     :default => -10
     t.integer "filter_priority",     :default => -10
+    t.integer "hide_dependencies"
   end
 
   add_index "views", ["company_id", "shared", "name"], :name => "views_company_id_shared_name_index"
