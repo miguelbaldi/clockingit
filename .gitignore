@@ -13,3 +13,4 @@ config/ferret_server.yml
 config/environment.rb
 config/juggernaut_config.yml
 semantic.cache
+comando.txt
