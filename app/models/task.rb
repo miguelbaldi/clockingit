@@ -79,22 +79,39 @@ class Task < ActiveRecord::Base
     
   }
   
-  before_update { |r_|
-    logger.info "\n\n>>>Teste hook before update<<<\n\n"
-    #r_.started_at = Time.now.utc.midnight
-    #r_.update
-    r_.generate_started_at_date r_
-  }
 
-  before_save do |_r|
+  before_save do |task_before|
      logger.info "\n\n>>>Teste hook before save<<<\n\n"
-    _r.generate_started_at_date _r
+     task_before.generate_started_at_date
   end
   
-  def generate_started_at_date(task)
-    logger.info "\n\n>>|generate_started_at_date[task_id=#{self.id}, due_date=#{self.due_date}]|<<\n\n"
-    
-    self.started_at = Time.now.utc.midnight
+  def generate_started_at_date
+    logger.info "\n\n>>|generate_started_at_date[task_id=#{self.id}, due_date=#{self.due_date}, duration=#{self.duration}]|<<\n\n"
+    due_dth = self.due_date
+    unless self.users.empty? || due_dth.nil?
+      workday_duration = self.users.first.workday_duration 
+      workdays = self.duration / workday_duration
+      
+      due_dth = due_dth.to_datetime + 1
+      logger.info "\n\n>>|workdays #{workdays} dias|<<\n\n"
+      workdays.downto(1) do |i|
+        logger.info "\n\n>>|passei aqui #{i}|<<\n\n"
+        due_dth = due_dth - 1
+        # 0 = Domingo
+        # 1 = Segunda
+        # 2 = Terça
+        # 3 = Quarta
+        # 4 = Quinta
+        # 5 = Sexta
+        # 6 = Sábado
+        due_dth = due_dth - 1 if due_dth.wday == 6
+        due_dth = due_dth - 2 if due_dth.wday == 0
+
+      end
+      logger.info "\n\n>>|FIM|<<\n\n"
+      logger.info "\n\n>>|Start date #{due_dth.strftime('%A %d/%m/%Y')} week day #{due_dth.wday} class #{due_dth.class}|<<\n\n"
+      self.start_date = due_dth
+    end
   end
   # w: 1, next day-of-week: Every _Sunday_
   # m: 1, next day-of-month: On the _10th_ day of every month
