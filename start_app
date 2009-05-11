@@ -1,0 +1,4 @@
+#/usr/bin/bash
+./script/ferret_server -e production start
+sleep 2
+nohup ./script/push_server &
