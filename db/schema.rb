@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090507223347) do
+ActiveRecord::Schema.define(:version => 20090508043206) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id",       :default => 0,  :null => false
@@ -467,7 +467,7 @@ ActiveRecord::Schema.define(:version => 20090507223347) do
     t.integer  "scheduled_duration"
     t.boolean  "scheduled",                         :default => false
     t.integer  "worked_minutes",                    :default => 0
-    t.datetime "started_at"
+    t.datetime "start_date"
   end
 
   add_index "tasks", ["project_id", "name"], :name => "idx_task_001", :unique => true
