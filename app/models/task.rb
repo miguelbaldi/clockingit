@@ -108,7 +108,6 @@ class Task < ActiveRecord::Base
         due_dth = due_dth - 2 if due_dth.wday == 0
 
       end
-      logger.info "\n\n>>|FIM|<<\n\n"
       logger.info "\n\n>>|Start date #{due_dth.strftime('%A %d/%m/%Y')} week day #{due_dth.wday} class #{due_dth.class}|<<\n\n"
       self.start_date = due_dth
     end
