@@ -33,6 +33,6 @@ namespace :start_dates do
   desc "Load start date field for every capable task on database."
   task :load => :environment do
     # Your task will be executed here, just plug it all in.
-    puts "Hello World!"
+    puts "call sub rotine"
   end
 end
