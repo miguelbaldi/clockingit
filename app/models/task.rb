@@ -87,12 +87,12 @@ class Task < ActiveRecord::Base
   
   def generate_started_at_date
     logger.info "\n\n>>|generate_started_at_date[task_id=#{self.id}, due_date=#{self.due_date}, duration=#{self.duration}]|<<\n\n"
-    due_dth = self.due_date
+    due_dth = self.due_date.clone unless self.due_date.nil?
     unless self.users.empty? || due_dth.nil?
       workday_duration = self.users.first.workday_duration 
       workdays = self.duration / workday_duration
       
-      due_dth = due_dth.to_datetime + 1
+      due_dth = due_dth.to_datetime 
       logger.info "\n\n>>|workdays #{workdays} dias|<<\n\n"
       workdays.downto(1) do |i|
         logger.info "\n\n>>|passei aqui #{i}|<<\n\n"
@@ -108,7 +108,7 @@ class Task < ActiveRecord::Base
         due_dth = due_dth - 2 if due_dth.wday == 0
 
       end
-      logger.info "\n\n>>|Start date #{due_dth.strftime('%A %d/%m/%Y')} week day #{due_dth.wday} class #{due_dth.class}|<<\n\n"
+      logger.info "\n\n>>|Start date #{due_dth.strftime('%A %d/%m/%Y')} week day #{due_dth.wday} class #{due_dth.class} due_date #{self.due_date}|<<\n\n"
       self.start_date = due_dth
     end
   end
