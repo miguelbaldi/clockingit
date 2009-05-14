@@ -270,7 +270,8 @@ function reset_owners() {
         <%= text_field 'task', 'due_at', {:size => 12}.merge(perms['prioritize']) %><br/>
           <% end %>
         <% end %>
-
+		<label for="task_start_date"><%=_ 'Start Date' %></label>
+	      <%= text_field 'task', 'start_date', {:size => 12, :value => (@task.start_date.nil? ? '':@task.start_date.strftime("#{current_user.date_format}")), :class => 'tooltip', :title => 'System calculated initial date (Experimental only!)', :readonly => 'readonly'} %><br/>
       </fieldset>
 
       <fieldset id="task_dependencies" style="padding-right:0;">
