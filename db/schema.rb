@@ -365,7 +365,7 @@ ActiveRecord::Schema.define(:version => 20090508043206) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :limit => 32
-    t.text     "data",       :limit => 2147483647
+    t.text     "data"
     t.datetime "updated_at"
   end
 

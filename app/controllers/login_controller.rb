@@ -11,7 +11,7 @@ class LoginController < ApplicationController
     @user = User.new
     render :action => 'login'
 
-    @news ||= NewsItem.find(:all, :conditions => "portal = 1", :order => "id desc", :limit => 3)
+    @news ||= NewsItem.find(:all, :conditions => "portal = true", :order => "id desc", :limit => 3)
   end
 
   def screenshots
@@ -42,7 +42,7 @@ class LoginController < ApplicationController
         end
       end
     end   
-    @news ||= NewsItem.find(:all, :conditions => "portal = 1", :order => "id desc", :limit => 3)
+    @news ||= NewsItem.find(:all, :conditions => "portal = true", :order => "id desc", :limit => 3)
   end
 
   def logout

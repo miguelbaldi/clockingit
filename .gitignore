@@ -9,9 +9,11 @@ _darcs
 /store
 /nbproject
 config/database.yml
+config/database.yml.*
 config/ferret_server.yml
 config/environment.rb
 config/juggernaut_config.yml
 semantic.cache
 comando.txt
 nohup.out
+db/*.sql
